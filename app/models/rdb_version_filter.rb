@@ -32,7 +32,6 @@ class RdbVersionFilter < RdbFilter
 
   def update(params)
     return unless (version = params[:version])
-
     if version == 'all'
       self.value = :all
     elsif version == 'unassigned'

@@ -1,0 +1,24 @@
+<%- if @project.module_enabled?(:scrumban) -%>
+  <div class="attributes">
+    <div class="splitcontentleft">
+      <p>
+      <%- product_backlog = @project.product_backlog 
+          sprints = @project.sprints 
+          #logger.info "Scrumable type: #{@issue.scrumable_id}"
+          scrum_types = []
+          scrum_types << [product_backlog.name, product_backlog.id , {'scrumable_type' => 'ProductBacklog'} ]
+          sprints.select{|sprint| scrum_types << [ sprint.name, sprint.id , {'scrumable_type' => 'Sprint'} ]}
+          %>
+      <%= label_tag 'issue_scrumable_id', l(:scrum_title) =%>
+      <%= select_tag 'issue[scrumable_id]', options_for_select(scrum_types, @issue.scrumable_id), include_blank: :true =%>
+      <%= hidden_field_tag 'issue[scrumable_type]', "#{@issue.scrumable_type}" =%>
+      <script type='text/javascript'>
+        $("#issue_scrumable_id").change(function() {
+          scrumable_type = $(this).find(":selected").attr("scrumable_type");
+          $("#issue_scrumable_type").val(scrumable_type);
+        });
+      </script>
+      </p>
+    </div>
+  </div>
+<%- end -%>

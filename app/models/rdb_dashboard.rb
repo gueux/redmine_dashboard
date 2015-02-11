@@ -75,6 +75,10 @@ class RdbDashboard
     IssueCategory.where :project_id => project_ids
   end
 
+  def sprints
+    Sprint.where :project_id => project_ids
+  end
+
   def trackers
     Tracker.where(:id => projects.map{|p| p.trackers.pluck(:id)}.uniq)
   end

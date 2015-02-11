@@ -79,6 +79,7 @@ html > body #content {
 
 #rdb-header .rdb-board,
 #rdb-header .rdb-filter,
+#rdb-header .rdb-sprint,
 #rdb-header .rdb-option {
 	float: left;
 	margin: 0 4px;
@@ -90,10 +91,12 @@ html > body #content {
 }
 
 #rdb-header .rdb-filter,
+#rdb-header .rdb-sprint,
 #rdb-header .rdb-option {
 	margin-top: 8px;
 }
 
+#rdb-header .rdb-sprint,
 #rdb-header .rdb-option {
 	float: right;
 }

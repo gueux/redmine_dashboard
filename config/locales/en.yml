@@ -1,9 +1,9 @@
 en:
-  project_module_dashboard: Dashboard
-  permission_view_dashboards: View Dashboards
-  permission_configure_dashboards: Configure Dashboards
+  project_module_scrumban: Scrumban
+  permission_view_scrumban: View Scrumban
+  permission_configure_scrumban: Configure Scrumban
 
-  menu_label_dashboard: Dashboard
+  menu_label_scrumban: Scrumban 
 
   rdb_taskboard: Task Board
   rdb_planningboard: Planning Board
@@ -82,3 +82,24 @@ en:
   rdb_flash_missing_lock_version: "<p><b>Missing lock version</b>: Cannot update issue without lock version. Try again."
   rdb_flash_stale_object: "<p>Attempted to update a stale issue: <b>%{issue}</b>. Check changes and try again."
   rdb_flash_invalid_request: "<p>Invalid request.</p>"
+
+  scrum_title: Scrum
+  scrum_product_backlog: Product Backlog
+  scrum_sprint: Sprint
+  field_scrumable: ScrumableID
+  field_scrumable_type: ScrumableType
+
+  rdb_scrumban: Scrum Board
+  rdb_scrumban_columns: Scrumban Columns
+  rdb_sprints: Sprints
+  rdb_sprint_add: New Sprint
+
+  field_end_date: End Date
+  text_sprint_destroy_confirmation: Are you sure you want to delete this Sprint?\nAll issues will back to ProductBacklog
+
+  rdb_filter_sprint_all: All Sprints
+  rdb_filter_sprint_multiple: Multiple Sprints
+  rdb_filter_sprint_product_backlog: Product Backlog
+  rdb_group_sprint: Sprint
+
+  

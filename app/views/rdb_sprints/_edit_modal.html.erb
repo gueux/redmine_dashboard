@@ -1,0 +1,8 @@
+<h3 class="title"><%=l(:rdb_sprint_add)%></h3>
+<%= labelled_form_for @sprint, :url => rdb_sprint_update_path(@sprint.project.identifier,@sprint.id), :remote => true do |f| %>
+<%= render :partial => 'rdb_sprints/form', :locals => { :f => f } %>
+  <p class="buttons">
+    <%= submit_tag l(:button_save), :name => nil %>
+    <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
+  </p>
+<% end %>

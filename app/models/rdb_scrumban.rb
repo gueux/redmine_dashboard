@@ -1,4 +1,4 @@
-class RdbTaskboard < RdbDashboard
+class RdbScrumban < RdbDashboard
 
   def init
     # Init filters
@@ -6,7 +6,6 @@ class RdbTaskboard < RdbDashboard
     self.add_filter RdbVersionFilter.new if versions.any?
     self.add_filter RdbTrackerFilter.new
     self.add_filter RdbCategoryFilter.new if issue_categories.any?
-    self.add_filter RdbSprintFilter.new if sprints.any?
   end
 
   def setup(params)
@@ -33,15 +32,15 @@ class RdbTaskboard < RdbDashboard
   def build
     # Init columns
     options[:hide_columns] ||= []
-    done_statuses = IssueStatus.sorted.select do |status|
-      next true if status.is_closed?
-      self.add_column RdbColumn.new("s#{status.id}", status.name, status,
-        :hide => options[:hide_columns].include?("s#{status.id}"))
-      false
-    end
-    self.add_column RdbColumn.new("sX", :rdb_column_done, done_statuses,
-      :compact => options[:hide_done], :hide => options[:hide_columns].include?("sX"))
+    
+    product_backlog = @project.product_backlog
+    self.add_column RdbScrumColumn.new("product_backlog_#{product_backlog.id}", product_backlog.id, 'ProductBacklog', product_backlog.name,
+      :hide => options[:hide_columns].include?("s#{product_backlog.id}"))
 
+    @project.sprints.select do |sprint|
+      self.add_column RdbScrumColumn.new("sprint_#{sprint.id}", sprint.id, 'Sprint', sprint.name,
+        :hide => options[:hide_columns].include?("s#{sprint.id}"))
+    end
     # Init groups
     case options[:group]
     when :tracker
@@ -64,11 +63,6 @@ class RdbTaskboard < RdbDashboard
         self.add_group RdbGroup.new("category-#{category.id}", category.name, :accept => Proc.new {|issue| issue.category_id == category.id })
       end
       self.add_group RdbGroup.new(:category_none, :rdb_unassigned, :accept => Proc.new {|issue| issue.category.nil? })
-    when :sprint
-      sprints.each do |sprint|
-        self.add_group RdbGroup.new("sprint-#{sprint.id}", sprint.name, :accept => Proc.new {|issue| issue.sprint == sprint.id })
-      end
-      self.add_group RdbGroup.new(:category_none, :rdb_unassigned, :accept => Proc.new {|issue| issue.sprint.nil? })
     when :version
       versions.each do |version|
         self.add_group RdbGroup.new("version-#{version.id}", version.name, :accept => Proc.new {|issue| issue.fixed_version_id == version.id })
@@ -107,12 +101,11 @@ class RdbTaskboard < RdbDashboard
   def visible_columns; column_list.select{|c| c.visible?} end
 
   def drop_on(issue)
-    if User.current.admin?
-      return column_list.reject{|c| c.statuses.include? issue.status}.map(&:id).join(' ')
-    end
-
-    statuses = issue.new_statuses_allowed_to(User.current)
-    statuses.delete issue.status
-    column_list.select{|c| (statuses & c.statuses).any?}.reject{|c| c.statuses.include? issue.status}.map(&:id).uniq.join(' ')
+    #if User.current.admin?
+    #  return column_list.reject{|c| c.statuses.include? issue.status}.map(&:id).join(' ')
+    #end
+    #byebug
+    #sprints = issue.new_statuses_allowed_to(User.current)
+    column_list.select{|c| c.id}.reject{|c| c.scrumable_id.equal?(issue.scrumable_id) && c.scrumable_type.to_s.eql?(issue.scrumable_type.to_s)}.map(&:id).uniq.join(' ')
   end
 end

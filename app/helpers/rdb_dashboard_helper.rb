@@ -71,6 +71,11 @@ module RdbDashboardHelper
 
     link_to *args
   end
+ 
+  def rdb_new_link_to(image,title, *args)
+    imaged_title = image + title
+    link_to imaged_title, *args
+  end
 
   def rdb_update_path(issue, options = {})
     send(:"rdb_#{@board.id}_update_path", {
@@ -92,5 +97,15 @@ module RdbDashboardHelper
 
   def rdb_board_path(options = {})
     send(:"rdb_#{@board.id}_path", options)
+  end
+
+  def rdb_path(options = {})
+    send(:"rdb_#{options[:board]}_path")
+  end
+
+  def sprint_destroy_confirmation_message(sprint_id)
+    sprint = Sprint.find(sprint_id)
+    message = l(:text_sprint_destroy_confirmation)
+    message
   end
 end

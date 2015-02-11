@@ -1,0 +1,10 @@
+#rdb-taskboard
+  %header#rdb-header
+    = render :partial => 'rdb_dashboard/scrumban/header'
+    .rdb-clear
+
+  #rdb-board
+    #rdb-board-container
+      = render :partial => 'rdb_dashboard/scrumban/column_names'
+      = render :partial => 'rdb_dashboard/scrumban/overall_progress'
+      = render :partial => 'rdb_dashboard/scrumban/groups'

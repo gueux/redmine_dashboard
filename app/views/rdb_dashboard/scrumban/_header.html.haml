@@ -1,5 +1,6 @@
 -# logger.info "Controller: #{params[:controller]} ,Action: #{params[:action]}"
 -# byebug
+= include_calendar_headers_tags
 .rdb-board
   = link_to '', rdb_board_path, :class => "rdb-async", :id => "rdb-refresh"
 
@@ -34,16 +35,6 @@
           = rdb_checkbox_link_to '', rdb_filter_path(:category => val.id), :enabled => @board.filters[:category].enabled?(val.id), :show_disabled => true
           = link_to val.name, rdb_filter_path(:category => val.id, :only => true)
 
-- if @board.sprints.any?
-  .rdb-filter.rdb-async
-    - render_rdb_menu :sprints, @board.filters[:sprint].title, :icons => true do
-      - render_rdb_menu_list [:all, :product_backlog] do |val|
-        = link_to t("rdb_filter_sprint_#{val}"), rdb_filter_path(:sprint => val)
-      - render_rdb_menu_list @board.sprints do |val|
-        %span.rdb-multicheck
-          = rdb_checkbox_link_to '', rdb_filter_path(:sprint => val.id), :enabled => @board.filters[:sprint].enabled?(val.id), :show_disabled => true
-          = link_to val.name, rdb_filter_path(:sprint => val.id)
-
 .rdb-filter.rdb-async
   - render_rdb_menu :assignee, @board.filters[:assignee].title do
     - render_rdb_menu_list [:all, :me, :none] do |val|
@@ -55,18 +46,24 @@
       - if Group === val
         = link_to val.name, rdb_filter_path(:assignee => val.id)
 
+.rdb-sprint.rdb-async
+  - render_rdb_menu :sprints, t(:rdb_sprints), :right => true, :icons => true do
+    - render_rdb_menu_list @board.column_list, :title => t(:rdb_scrumban_columns) do |column|
+      = rdb_checkbox_link_to column.title, rdb_board_path(:column => column.id), :enabled => @board.columns[column.id].visible?
+    - render_rdb_menu_list do
+      - render_rdb_menu_list_item do 
+        = link_to t(:rdb_sprint_add), rdb_sprint_new_path(@board.project), :id => "rdb-sprint-add", :class => "rdb-sprint-add", :remote => true, :method => 'get'
+
 .rdb-option.rdb-async
   - render_rdb_menu :options, t(:rdb_options), :right => true, :icons => true do
     - render_rdb_menu_list do
       - render_rdb_menu_list_item do
-        = rdb_checkbox_link_to t(:rdb_options_change_assignee), rdb_board_path(:change_assignee => !@board.options[:change_assignee]),
-            :enabled => @board.options[:change_assignee], :title => t(:rdb_options_change_assignee_info)
-        = rdb_checkbox_link_to t(:rdb_options_hide_done), rdb_board_path(:hide_done => !@board.options[:hide_done]),
-            :enabled => @board.options[:hide_done], :title => t(:rdb_options_hide_done_info)
-        = rdb_checkbox_link_to t(:rdb_options_include_subprojects), rdb_board_path(:include_subprojects => (@board.project_ids.size > 1) ? 'false' : 'true'),
-            :enabled => (@board.project_ids.size > 1)
-    - render_rdb_menu_list @board.column_list, :title => t(:rdb_options_columns) do |column|
-      = rdb_checkbox_link_to column.title, rdb_board_path(:column => column.id), :enabled => @board.columns[column.id].visible?
+        =# rdb_checkbox_link_to t(:rdb_options_change_assignee), rdb_board_path(:change_assignee => !@board.options[:change_assignee]),
+        -#    :enabled => @board.options[:change_assignee], :title => t(:rdb_options_change_assignee_info)
+        =# rdb_checkbox_link_to t(:rdb_options_hide_done), rdb_board_path(:hide_done => !@board.options[:hide_done]),
+        -#   :enabled => @board.options[:hide_done], :title => t(:rdb_options_hide_done_info)
+        =# rdb_checkbox_link_to t(:rdb_options_include_subprojects), rdb_board_path(:include_subprojects => (@board.project_ids.size > 1) ? 'false' : 'true'),
+        -#   :enabled => (@board.project_ids.size > 1)
     - render_rdb_menu_list do
       - render_rdb_menu_list_item do
         = link_to t(:rdb_options_fullscreen), 'javascript:Rdb.rdbToggleFullscreen();', :id => "rdb-option-fullscreen"
@@ -82,5 +79,5 @@
     -#- render_rdb_menu_list RdbDashboard::BOARD_MODES, :title => t(:rdb_options_board_view) do |mode|
     -#  = rdb_checkbox_link_to t(:"rdb_options_board_view_#{mode}"), rdb_board_path(:mode => mode), :enabled => @board.options[:mode] == mode
     -#- if @board.compact?
-    - render_rdb_menu_list [:none, :tracker, :category, :priority, :assignee, :version, :parent, :project, :sprint], :title => t(:rdb_options_group) do |group|
+    - render_rdb_menu_list [:none, :tracker, :category, :priority, :assignee, :version, :parent, :project], :title => t(:rdb_options_group) do |group|
       = rdb_checkbox_link_to t(:"rdb_group_#{group}"), rdb_board_path(:group => group), :enabled => @board.options[:group] == group

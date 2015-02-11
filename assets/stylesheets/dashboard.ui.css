@@ -215,13 +215,16 @@
 ** Dashboard Checkbox Links
 */
 
-.rdb-checkbox-link {
+.rdb-sprint-add, .rdb-checkbox-link {
 	padding-left: 20px;
 	background-image: none;
 	background-repeat: no-repeat;
 	background-position: 2px 50%;
 }
 
+.rdb-sprint-add {
+        background-image: url(../../../images/add.png);
+}
 .rdb-checkbox-link.rdb-checkbox-link-enabled {
 	background-image: url(../../../images/true.png);
 }

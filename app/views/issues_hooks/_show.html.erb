@@ -1,0 +1,8 @@
+<%- if @project.module_enabled?(:scrumban) and !issue.scrumable.nil? -%>
+  <tr>
+    <th><%='Scrum'%>:</th>
+    <td>
+        <%= p " #{@issue.scrumable.name} " %>
+    </td>
+  </tr>
+<%- end -%>
