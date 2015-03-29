@@ -7,5 +7,6 @@
           %span= t :rdb_x_issues, :count => column.issues.count
         - if column.is_sprint?
           %span== #{column.sprint.start_date} - #{column.sprint.end_date}
-        = link_to l(:button_edit), rdb_sprint_edit_path(:id => column.scrumable_id, :project_id => @project.identifier), :class => 'icon icon-edit', :method => 'get', :remote => true if column.is_sprint?
+        = link_to l(:button_edit), rdb_sprint_edit_path(:id => column.scrumable_id, :project_id => @project.identifier), :class => 'icon icon-edit', :method => :put, :remote => true if column.is_sprint?
         = link_to l(:button_delete), rdb_sprint_delete_path(:id => column.scrumable_id, :project_id => @project.identifier), :data => {:confirm => sprint_destroy_confirmation_message(column.scrumable_id)}, :method => :delete, :class => 'icon icon-del' if column.is_sprint?
+        = link_to l(:button_close), rdb_sprint_close_path(:id => column.scrumable_id, :project_id => @project.identifier), :method => :put, :class => 'icon icon-close' if column.is_sprint?

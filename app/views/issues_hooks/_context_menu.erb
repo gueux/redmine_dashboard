@@ -1,0 +1,12 @@
+  <% if @project.product_backlog.present? || @project.sprints.present? -%>
+  <li class="folder">
+    <a href="#" class="submenu"><%= l(:scrum_title) %></a>
+    <ul>
+    <% @project.sprints.each do |s| -%>
+        <li><%= context_menu_link s.name, bulk_update_issues_path(:ids => @issue_ids, :issue => {'scrumable_id' => s, 'scrumable_type' => 'Sprint'}, :back_url => @back), :method => :post, :selected => (@issue && s == @issue.scrumable_id && @issue.scrumable_type == 'Sprint'), :disabled => !@can[:update] %></li>
+    <% end -%>
+        <li><%= context_menu_link l(:scrum_product_backlog), bulk_update_issues_path(:ids => @issue_ids, :issue => {'scrumable_id' => @project.product_backlog.id, 'scrumable_type' => 'ProductBacklog'}, :back_url => @back), :method => :post, :selected => (@issue && @issue.scrumable_type == 'ProductBacklog'), :disabled => !@can[:update] %></li>
+        <li><%= context_menu_link l(:label_none), bulk_update_issues_path(:ids => @issue_ids, :issue => {'scrumable_id' => 'none', 'scrumable_type' => 'none'}, :back_url => @back), :method => :post, :selected => (@issue && @issue.scrumable_id.nil?), :disabled => !@can[:update] %></li>
+    </ul>
+  </li>
+  <% end %>

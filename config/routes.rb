@@ -19,4 +19,5 @@ match 'projects/:project_id/rdb/sprint/new'      => 'rdb_sprints#new',      :as 
 match 'projects/:project_id/rdb/sprint/create'   => 'rdb_sprints#create',   :as => :rdb_sprint_create,   via: [:get, :post]
 match 'projects/:project_id/rdb/sprint/:id/edit'     => 'rdb_sprints#edit',     :as => :rdb_sprint_edit,     via: [:get, :post]
 match 'projects/:project_id/rdb/sprint/:id/update'   => 'rdb_sprints#update',   :as => :rdb_sprint_update,   via: [:put]
+match 'projects/:project_id/rdb/sprint/:id/close'   => 'rdb_sprints#close',   :as => :rdb_sprint_close,   via: [:put]
 match 'projects/:project_id/rdb/sprint/:id/delete'   => 'rdb_sprints#delete',   :as => :rdb_sprint_delete,   via: [:delete]

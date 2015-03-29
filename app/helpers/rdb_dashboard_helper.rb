@@ -104,8 +104,14 @@ module RdbDashboardHelper
   end
 
   def sprint_destroy_confirmation_message(sprint_id)
-    sprint = Sprint.find(sprint_id)
+    #sprint = Sprint.find(sprint_id)
     message = l(:text_sprint_destroy_confirmation)
+    message
+  end
+
+  def sprint_destroy_confirmation_message(sprint_id)
+    #sprint = Sprint.find(sprint_id)
+    message = l(:text_sprint_close_confirmation)
     message
   end
 end

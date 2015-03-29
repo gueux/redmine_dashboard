@@ -15,3 +15,4 @@
     %div.rdb-property.rdb-property-category.rdb-disabled= t(:rdb_unassigned)
 %div.rdb-property.rdb-property-time{:class => (issue.estimated_hours.nil? and issue.time_entries.empty?) ? 'rdb-disabled' : ''}
   =t(:rdb_property_time, :estimated => issue.estimated_hours.to_f.round(2), :actual => issue.time_entries.map(&:hours).reduce(&:+).to_f.round(2)).html_safe
+%div.rdb-property.rdb-property-last-updated= t(:rdb_last_updated_by) + ': ' + issue.last_updated_by[:login]

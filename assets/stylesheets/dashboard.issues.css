@@ -151,6 +151,11 @@
 	font-size: 140%;
 }
 
+.rdb-property-last-updated {
+        background-image: url("img/last_updated.png");
+        background-size: 10px, 10px;
+}
+
 
 /* ========================================================
 ** Issue Compact View

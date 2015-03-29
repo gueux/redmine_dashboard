@@ -95,11 +95,13 @@ en:
   rdb_sprint_add: New Sprint
 
   field_end_date: End Date
-  text_sprint_destroy_confirmation: Are you sure you want to delete this Sprint?\nAll issues will back to ProductBacklog
+  text_sprint_destroy_confirmation: "Are you sure you want to delete this Sprint?\nAll issues will back to ProductBacklog"
+  text_sprint_close_confirmation: "Some of Sprints issues are not done!"
 
   rdb_filter_sprint_all: All Sprints
   rdb_filter_sprint_multiple: Multiple Sprints
   rdb_filter_sprint_product_backlog: Product Backlog
   rdb_group_sprint: Sprint
+  rdb_last_updated_by: Last Updated by
 
   

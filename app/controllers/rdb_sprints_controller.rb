@@ -4,7 +4,7 @@ class RdbSprintsController < ApplicationController
 
   helper :rdb_dashboard
 
-  before_filter :find_project_by_project_id, :only => [:index, :new, :create, :edit, :update, :delete]
+  before_filter :find_project_by_project_id, :only => [:index, :new, :create, :edit, :update, :delete, :close]
 
   def new
     @sprint = @project.sprints.build
@@ -24,7 +24,6 @@ class RdbSprintsController < ApplicationController
     if request.post?
       if @sprint.save
         respond_to do |format|
-          #byebug
           format.js  { render :js => "window.location.href='" + rdb_scrumban_path( :id => @project.identifier ) + "'" }
         end
       else
@@ -56,5 +55,21 @@ class RdbSprintsController < ApplicationController
     respond_to do |format|
       format.html { redirect_back_or_default rdb_scrumban_path( :id => @project.identifier ) }
     end
+  end
+
+  def close
+    @sprint = @project.sprints.find(params[:id])
+    return flash_error(:text_sprint_close_confirmation) if @sprint.has_open_issues?
+    if @sprint.save
+      respond_to do |format|
+        format.html { redirect_back_or_default rdb_scrumban_path( :id => @project.identifier ) }
+      end
+    end
+  end
+
+  def flash_error(sym, options = {})
+    flash.now[:rdb_error] = I18n.t(sym, options).html_safe
+    Rails.logger.info "Render Rdb flash error: #{sym}"
+    options[:update] ? render('index.js') : render('error.js')
   end
 end

@@ -57,4 +57,5 @@ class RdbSprintFilter < RdbFilter
     return true if value == :all
     values.include? id
   end
+
 end
