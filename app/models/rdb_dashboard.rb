@@ -80,7 +80,7 @@ class RdbDashboard
   end
 
   def trackers
-    Tracker.where(:id => projects.map{|p| p.trackers.pluck(:id)}.uniq)
+    Tracker.where(:id => projects.map{|p| p.trackers.pluck(:id)}.uniq.flatten)
   end
 
   def assignees
@@ -88,15 +88,15 @@ class RdbDashboard
   end
 
   def members
-    Member.where(:id => projects.map{|p| p.members.map(&:id)}.uniq)
+    Member.where(:id => projects.map{|p| p.members.map(&:id)}.uniq.flatten)
   end
 
   def member_principals
-    Member.where(:id=> projects.map{|p| p.member_principals.map(&:id)}.uniq)
+    Member.where(:id=> projects.map{|p| p.member_principals.map(&:id)}.uniq.flatten)
   end
 
   def memberships
-    Member.where(:id => projects.map{|p| p.memberships.pluck(:id) }.uniq)
+    Member.where(:id => projects.map{|p| p.memberships.pluck(:id) }.uniq.flatten)
   end
 
   def filter(issues)

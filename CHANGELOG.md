@@ -1,3 +1,25 @@
+## 2.7.1
+
+* Update locale files (new: ko)
+
+## 2.7.0
+
+* Add Mongolian locale
+* Update Russian locale
+* Add Turkish locale (#102)
+* Fix issue with version filter on parent projects (#103, #96)
+* Fix/Add overdue handling and styling (#104)
+* Small fix for group by parent issue
+
+## 2.6.0
+
+* Update for Redmine 3.0
+
+## 2.5.0
+
+* Czech translations
+* Global YAML configuration file for default view options
+
 ## 2.4.0
 
 * Integration with ISSUE-ID plugin (#64)

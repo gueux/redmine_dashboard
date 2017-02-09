@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 # Gems required by redmine_dashboard
 
+send :ruby, RUBY_VERSION if ENV['CI']
+
 gem 'haml'
 gem 'byebug'
 
 group :development do
-  gem 'guard-rspec'
   gem 'transifex-ruby-fork-jg', require: false
   gem 'inifile', require: false
   #gem 'byebug' 
@@ -17,7 +18,4 @@ group :test do
   gem 'poltergeist'
   gem 'database_cleaner'
   gem 'fuubar'
-
-  # for redmine on travis CI
-  gem 'test-unit'
 end

@@ -7,7 +7,7 @@
 
 This [Redmine](http://redmine.org) plugin adds an issue dashboard that supports drag and drop for issues and various filters.
 
-**Redmine Dashboard 2** is compatible with Redmine 2.4 and possibly older versions.
+**Redmine Dashboard 2** is compatible and tested with Redmine 3.3, 3.2, 3.1, 2.6. It may be compatible with older versions too.
 
 ![Redmine Dashboard v2.x Screenshot](http://altimos.de/rdb/img/rdb_2-1.png)
 
@@ -29,15 +29,24 @@ Rate plugin at [redmine.org](http://www.redmine.org/plugins/redmine-dashboard).
 
 I provide a PPA at [ppa:jgraichen/redmine-dashboard](https://launchpad.net/~jgraichen/+archive/redmine-dashboard) for Ubuntu Trusty that should work with Trusty's Redmine and [ppa:ondrej/redmine](https://launchpad.net/~ondrej/+archive/redmine). Debian Wheezy with wheezy-backports enabled should also work with trusty PPA.
 
-### Others
+### Manual
 
-Clone git repository to `plugins`, checkout wanted release (`git checkout v2.2.0`) and restart redmine. A database migration is not needed. Run `bundle install` to install required gems.
+1. Download [latest release](https://github.com/jgraichen/redmine_dashboard/releases).
+2. Extract archive to `<redmine>/plugins`. Make **sure** the plugin directory is called `<redmine>/plugins/redmine_dashboard/` ([#11](https://github.com/jgraichen/redmine_dashboard/issues/11)).
+3. Install required dependencies by running `bundle install --without development test` in your redmine directory. **Note**: Bitnami and other appliance are not officially supported and may need additional option e.g. `--path vendor/bundle` ([#58](https://github.com/jgraichen/redmine_dashboard/issues/58)).
+4. A database migration is not needed. Restart redmine.
 
-#### Upgrade
+### Configure Redmine
 
-Fetch updates (`git fetch --tags`) and checkout newer release (`git checkout $(git tag | tail -n1)`). Run `bundle install` to install newly required gems. A database migration is not needed.
+1. Add the dashboard module to your project (`Settings > Modules`).
+2. Configure dashboard permissions to your user roles (`Administration > Roles and permissions`). Users won't see a Dashboard tab without having the `View Dashboard` permission.
 
-You can list all available version with `git tag -l`.
+### Upgrade
+
+1. Remove old plugin directory.
+2. Follow installation steps for new release.
+
+As of v2 you can also use git by cloning the repository and checkout the release tag.
 
 ## Contribute
 
